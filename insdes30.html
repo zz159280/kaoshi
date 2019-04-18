@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function px(arr){
+				for (i=0;i<arr.length-1;i++) {
+					var b=i;
+					for (j=i+1;j<arr.length;j++) {
+						 if(arr[b]>arr[j]){
+						 	b=j;
+						 }
+					}
+					var c=arr[i];
+					arr[i]=arr[b];
+					arr[b]=c;
+				}return arr;
+			};console.log(px([8,64,64,8,56,87,90]))
+		</script>
+	</body>
+</html>
