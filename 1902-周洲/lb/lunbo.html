@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+* {margin:0; padding:0; }
+li{list-style:none; }
+
+#div1 {width:850px; height:500px; margin:50px auto; overflow:hidden; position:relative;}
+#div1 ul {width: 1000%;height: 500px;position: absolute;left: 0;top:0;transition:2s;}
+#div1 ul li{width:850px;height:500px;float:left;}
+#div1 ol {position:absolute;right: 10%;bottom: 10px;z-index:6}
+#div1 ol li{width: 20px;height: 20px;background: #fff;margin-left: 5px;float: left;line-height: 20px;text-align: center;cursor: pointer;}
+#div1 ol li.ac{background: red;color: #fff;}
+#div1>a{text-decoration: none;position: absolute;top: 50%;margin-top: -10px;height: 40px;line-height: 32px;text-align: center;width: 40px;font-size: 40px;vertical-align: middle;color: #fff;background: rgba(0,0,0,0.5);z-index:6;}
+#goPrev{left: 0;}
+#goNext{right: 0;}
+img{width:850px; height:500px;}
+</style>
+	</head>
+	<body>
+		<div id="div1">
+	<ul>
+    	<li class="ac"><a href="javascript:alert(0);"><img src="img/1.jpg" /></a></li>
+    	<li><a href="javascript:alert(1);"><img src="img/2.jpg" /></a></li>
+    	<li><a href="javascript:alert(2);"><img src="img/3.jpg" /></a></li>
+    	<li><a href="javascript:alert(3);"><img src="img/4.jpg" /></a></li>
+    	<li><a href="javascript:alert(4);"><img src="img/5.jpg" /></a></li>
+    </ul>
+    <ol>
+    	<li class="ac">1</li>
+    	<li>2</li>
+    	<li>3</li>
+    	<li>4</li>
+    	<li>5</li>
+    </ol>
+    <a href="javascript:;" id="goPrev">&laquo;</a>
+    <a href="javascript:;" id="goNext">&raquo;</a>
+</div>
+<script>
+	// 找对象
+	var div = document.querySelector("#div1"),
+		li = div.querySelector("ul").children,
+		img=div.querySelector("li").querySelector("a").querySelector("img"),
+		ul=div.querySelector("ul"),
+		btns = div.querySelector("ol").children,
+		goPrev = document.querySelector("#goPrev"),
+		goNext = document.querySelector("#goNext"),
+		imgwidth=img.offsetWidth;
+		
+	console.log(imgwidth);
+	var last=0;
+	var index = 0; // 记录当前索引
+	var timer = null;
+	ul.appendChild(ul.children[0].cloneNode(true));
+	//点击
+	
+    for (let i=0;i < btns.length;i++) {
+    	
+    	btns[i].onclick=function(){
+    		index=i;
+    		ul.style.left=-(index*imgwidth)+"px";
+    		btns[last].className="";
+    		this.className="ac";
+    		last=index;
+    	};
+    };
+    //右
+    goNext.onclick=function(){
+    	
+    	if(++index===li.length)index=0;
+    	
+    	ul.style.left=-(index*imgwidth)+"px";
+    		this.className="ac";
+    		
+    		
+    setTimeout(function(){
+                console.log(1)
+                if(index>li.length-2){
+                   
+                    this.className="";
+                    index=0;
+                    ul.style.left=0;
+                    ul.style.transition="none"
+                };
+            },10)
+    btns[index].className="ac";
+    		btns[index-1].className="";
+    ul.style.transition="1s"
+    }//左
+     goPrev.onclick=function(){
+     	console.log(1)
+     	console.log(--index<0)
+    	if(--index<0)index = btns.length-1;
+    	ul.style.left=-(index*imgwidth)+"px";	
+    	btns[index].className="ac";
+    };
+   
+
+  function zdbf(){
+  	timer = setInterval(function () {
+			// 每隔两秒自动调用点击函数
+			goNext.onclick();
+		},2000);
+ }zdbf();
+  div.onmouseenter = function () {
+		clearInterval(timer);
+	}
+	
+	div.onmouseleave = zdbf;
+</script>
+	</body>
+</html>

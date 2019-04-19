@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			/*膜态层样式*/
+			*{margin: 0;padding: 0;}
+			.modal {
+				width: 100%;
+				height: 100%;
+				background: rgba(147, 168, 185, .5);
+				position: fixed;
+				left: 0;
+				top: 0;
+				
+			}
+			
+			.tankuang {
+				width: 500px;
+				height: 300px;
+				border: 1px solid;
+				display: none;
+				background: pink;
+				position: relative;
+				z-index: 20;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+			}
+			
+			.tankuang h4{
+				width: 500px;
+				height: 30px;
+				text-align: center;
+			}
+			#closeBtn{position: absolute;right: 0;top: 0;font-size: 20px;text-decoration: none;color: #fff;}
+		   #neirong{
+		   	width: 400px;
+		   	height: 200px;
+		   	margin-left: 30px;
+		   }
+		   .tankuang button{
+		   	position: absolute;
+		   	bottom: 20px;
+		   	right: 30px;
+		   }
+		   .div1{width: 400px;height: 400px; border: 1px solid;margin: 150px auto;}
+		</style>
+	</head>
+
+	<body>
+		<button id="dlbtn">登录</button>
+		<div class="tankuang"></div>
+		<script>
+			class xg {
+
+				constructor(ym) {
+					this.bodys = ym;
+					this.dlbtn = ym.querySelector("#dlbtn");
+					this.tankuang = ym.querySelector(".tankuang");
+					this.btns()
+				}
+				btns() {
+					let _this = this;
+					this.dlbtn.onclick = function() {
+ 
+						_this.tankuang.innerHTML = '<h4>微博发布</h4>'+
+			                '<a id="closeBtn" class="close_btn" href="javascript:;">×</a>'+
+			                '<p><label>用户名：<input id="username" type="text"></label></p>'+
+			                '<p><label>内容<input id="neirong" type="text"></label></p>'+
+			                '<button id="fb">发布</button>';
+                            _this.tankuang.style.display="block";
+	                        _this.mo=document.createElement("div");
+	                        _this.mo.className="modal";
+	                        document.body.appendChild(_this.mo);
+					}
+					this.tankuang.onclick=function(e){
+						e=e||event;
+						
+						var target=e.target||e.srcElement;
+						var div=document.createElement("div");
+					    var body=document.querySelector("body");
+					    if(target.id=="closeBtn"){
+					    	_this.tankuang.style.display="none";
+					    	document.body.removeChild(_this.mo);
+					    }else if(target.id=="fb"){
+					    	_this.tankuang.style.display="none";
+					    	document.body.removeChild(_this.mo);
+					    	let bt=document.querySelector("#username").value;
+					    	let nr=document.querySelector("#neirong").value;
+					    	div.innerHTML=("用户名： "+bt+"<br>"+"内容:"+nr+"<br>");
+					    	div.className="div1";
+					    	body.appendChild(div);	
+					    	/*div.oncontextmenu=function(e){
+					    		e=e||event;
+					    		var target=e.target||e.srcElement;
+					    		
+					    		return false
+					    	}*/
+					    }
+					}
+				}
+             
+			};
+			new xg(document)
+		</script>
+	</body>
+
+</html>
